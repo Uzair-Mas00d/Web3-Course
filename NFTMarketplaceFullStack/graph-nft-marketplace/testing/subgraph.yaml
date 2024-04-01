@@ -1,0 +1,32 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: sepolia
+    source:
+      address: "0xA377A6B914c01Fd80307064D662D73Aa4aCD3925"
+      abi: Contract
+      startBlock: 5589786
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ItemBought
+        - ItemCancled
+        - ItemListed
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: ItemBought(indexed address,indexed address,uint256,uint256)
+          handler: handleItemBought
+        - event: ItemCancled(indexed address,indexed address,indexed uint256)
+          handler: handleItemCancled
+        - event: ItemListed(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleItemListed
+      file: ./src/contract.ts
